@@ -3,6 +3,7 @@
 curl "http://localhost:4741/events" \
   --include \
   --request POST \
+  --header "Authorization: Token token=${TOKEN}" \
   --header "Content-Type: application/json" \
   --data '{
     "event": {
@@ -12,7 +13,8 @@ curl "http://localhost:4741/events" \
       "location": "'"${LOCATION}"'",
       "description": "'"${DESCRIPTION}"'",
       "hare": "'"${HARE}"'",
-      "bag_car": "'"${BAGCAR}"'"
+      "bag_car": "'"${BAGCAR}"'",
+      "user_id": "'"${USER}"'"
     }
   }'
 

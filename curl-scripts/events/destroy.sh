@@ -1,5 +1,8 @@
 #!/bin/bash
 
-curl --include --request DELETE "http://localhost:4741/events/${ID}"
+curl "http://localhost:4741/events/${ID}" \
+--include \
+--header "Authorization: Token token=${TOKEN}" \
+--request DELETE
 
 echo

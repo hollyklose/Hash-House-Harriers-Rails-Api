@@ -1,5 +1,5 @@
 class AttendeeSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :paid
   has_one :user
   has_one :event
 end

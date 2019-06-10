@@ -3,6 +3,7 @@
 class EventSerializer < ActiveModel::Serializer
   attributes :id, :name, :date, :time, :location, :description, :hare, :bag_car, :user_id, :editable
   has_many :users
+  has_many :attendees
 
   def time
     @time = Time.now.strftime('%H:%m %P')

@@ -49,6 +49,6 @@ class AttendeesController < OpenReadController
 
   # Only allow a trusted parameter "white list" through.
   def attendee_params
-    params.require(:attendee).permit(:user_id, :event_id)
+    params.require(:attendee).permit(:user_id, :event_id, :paid)
   end
 end

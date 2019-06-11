@@ -3,12 +3,12 @@
 class UsersController < ProtectedController
   skip_before_action :authenticate, only: %i[signup signin]
 
-  def admin
-    if current_user.hash_cash?
-      skip_before_action :authenticate, only: UPDATE_ACTIONS
-    end
-    # BUT IF NOT< CAN'T EDIT!!
-  end
+  # def admin
+  #   if current_user.hash_cash?
+  #     skip_before_action :authenticate, only: UPDATE_ACTIONS
+  #   end
+  #   # BUT IF NOT< CAN'T EDIT!!
+  # end
 
   # POST '/sign-up'
   def signup

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AttendeesController < OpenReadController
-  before_action :set_attendee, only: %i[show update destroy]
+  before_action :set_attendee, only: %i[show destroy]
 
   # GET /attendees
   def index
@@ -28,10 +28,13 @@ class AttendeesController < OpenReadController
 
   # PATCH/PUT /attendees/1
   def update
-    if @attendee.update(attendee_params)
-      render json: @attendee
-    else
-      render json: @attendee.errors, status: :unprocessable_entity
+    if current_user[:hash_cash]
+      @attendee = Attendee.find(params[:id])
+      if @attendee.update(attendee_params)
+        render json: @attendee
+      else
+        render json: @attendee.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -46,7 +49,6 @@ class AttendeesController < OpenReadController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_attendee
-    # @attendee = Attendee.find(params[:id])
     @attendee = current_user.attendees.find(params[:id])
   end
 

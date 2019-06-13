@@ -17,7 +17,7 @@ class AttendeesController < OpenReadController
 
   # POST /attendees
   def create
-    @attendee = Attendee.new(attendee_params)
+    @attendee = current_user.attendees.build(attendee_params)
 
     if @attendee.save
       render json: @attendee, status: :created, location: @attendee
@@ -38,17 +38,21 @@ class AttendeesController < OpenReadController
   # DELETE /attendees/1
   def destroy
     @attendee.destroy
+
+    head :no_content
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_attendee
-    @attendee = Attendee.find(params[:id])
+    # @attendee = Attendee.find(params[:id])
+    @attendee = current_user.attendees.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def attendee_params
     params.require(:attendee).permit(:user_id, :event_id, :paid)
   end
+  private :set_attendee, :attendee_params
 end

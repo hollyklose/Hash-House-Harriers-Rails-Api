@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EventsController < OpenReadController
-  before_action :set_event, only: %i[show update destroy]
+  before_action :set_event, only: %i[update destroy]
 
   # GET /events
   def index
@@ -12,12 +12,13 @@ class EventsController < OpenReadController
 
   # GET /events/1
   def show
+    @event = Event.find(params[:id])
     render json: @event
   end
 
   # POST /events
   def create
-    @event = Event.new(event_params)
+    @event = current_user.events.build(event_params)
 
     if @event.save
       render json: @event, status: :created, location: @event
@@ -38,17 +39,20 @@ class EventsController < OpenReadController
   # DELETE /events/1
   def destroy
     @event.destroy
+
+    head :no_content
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_event
-    @event = Event.find(params[:id])
+    @event = current_user.event_creator_recipients.find(params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def event_params
     params.require(:event).permit(:name, :date, :time, :location, :description, :hare, :bag_car, :user_id)
   end
+  private :set_event, :event_params
 end
